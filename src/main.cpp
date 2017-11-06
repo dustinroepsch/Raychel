@@ -1,15 +1,30 @@
 #include <SFML/Graphics.hpp>
+#include <cstdlib>
+#include "config.h"
 
 int main() {
-    sf::Window App(sf::VideoMode(800, 600), "Raychel");
+    sf::RenderWindow gameWindow(sf::VideoMode(Config::windowWidth, Config::windowHeight), "Raychel");
+    sf::Texture texture;
+    texture.create(Config::windowWidth, Config::windowHeight);
+    sf::Sprite sprite(texture);
+    sf::Uint8* pixels = new sf::Uint8[Config::windowWidth * Config::windowHeight * 4];
 
-    while (App.isOpen()) {
+    while (gameWindow.isOpen()) {
         sf::Event Event;
-        while (App.pollEvent(Event)) {
+        while (gameWindow.pollEvent(Event)) {
           if (Event.type == sf::Event::Closed)
-        App.close();
+        gameWindow.close();
         }
-        App.display();
+        
+        for (int i = 0; i < Config::windowHeight * Config::windowWidth * 4; i++) {
+            pixels[i] = rand();
+        }
+
+        texture.update(pixels);
+        gameWindow.draw(sprite);
+        gameWindow.display();
       }
+
+      delete[] pixels;
     return 0;
 }
