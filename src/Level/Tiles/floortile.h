@@ -9,6 +9,9 @@ public:
     inline char getAsciiRepresentation() const override {
         return ' ';
     }
+    inline bool isOpaque() const override {
+        return false;
+    }
 };
 
 #endif
