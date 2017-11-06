@@ -9,7 +9,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_CXX_STANDARD_REQUIRED 11)
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Werror -o2")
 
-add_executable (Raychel src/main.cpp src/Level/level.cpp src/Level/Tiles/simpletilemap.cpp)
+add_executable (Raychel src/main.cpp src/Level/level.cpp src/Level/Tiles/simpletilemap.cpp src/game.cpp)
 
 find_package(SFML 2 REQUIRED network audio graphics window system)
 if(SFML_FOUND)

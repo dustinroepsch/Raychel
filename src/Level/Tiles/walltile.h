@@ -4,7 +4,11 @@
 #include "leveltile.h"
 
 class WallTile : public LevelTile {
-
+public:
+    WallTile(){};
+    inline char getAsciiRepresentation() const override {
+        return '#';
+    }
 };
 
 #endif

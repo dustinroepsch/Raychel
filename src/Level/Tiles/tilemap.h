@@ -2,11 +2,13 @@
 #define TILEMAP_H
 
 #include <SFML/Graphics.hpp>
+#include <memory>
+
 #include "leveltile.h"
 
 class TileMap {
 public:
-    virtual const LevelTile& colorToTile(const sf::Color &color) const = 0;
+    virtual  const std::shared_ptr<LevelTile> colorToTile(const sf::Color &color) const = 0;
 };
 
 #endif
