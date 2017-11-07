@@ -17,8 +17,7 @@ class Game
     void printCurrentLevelAsAscii();
     void render(sf::Uint8 *pixels);
     Player player;
-    
-
+    const std::string getDebugText();
   private:
     std::shared_ptr<Level> currentLevel;
     const SimpleTileMap simpleTileMap;

@@ -61,11 +61,12 @@ bool Level::checkCollision(const sf::Vector2f &posToCheck, float castSlope, int 
     int col = (int)(posToCheck.x + .02 * xDirection);
     int row = (int)getY(castSlope, col, posToCheck);
 
-    if (col < 0 || col > dimensions.x || row < 0 || row > dimensions.y)
+    if (col < 0 || col >= dimensions.x || row < 0 || row >= dimensions.y)
     {
         //always collide out of bounds;
         return true;
     }
+
 
     return tiles[tileIndex(row, col)]->isOpaque();
 }
@@ -152,6 +153,6 @@ CastResult Level::rayCast(const Player &player, float angle) const
         }
     }
     //float dist = sqrt((currentPosition.x - player.position.x) * (currentPosition.x - player.position.x) + (currentPosition.y - player.position.y) * (currentPosition.y - player.position.y));
-   // return CastResult(dist, horizontalCollision);
+     //eturn CastResult(dist, horizontalCollision);
     return CastResult(getPerpDistance(currentPosition, player), horizontalCollision);
 }

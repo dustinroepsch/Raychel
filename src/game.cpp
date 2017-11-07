@@ -28,6 +28,10 @@ float scale(float x, float xStart, float xEnd, float newStart, float newEnd) {
     return slope * (x - xStart) + newStart;
 }
 
+const std::string Game::getDebugText() {
+    return "x: " + std::to_string(player.position.x) + "y: " + std::to_string(player.position.y) + "angle: " + std::to_string(player.angle);
+}
+
 void Game::render(sf::Uint8 *pixels)
 {
     //temporary, eventually use textures
@@ -44,7 +48,7 @@ void Game::render(sf::Uint8 *pixels)
     {
         CastResult castResult = currentLevel->rayCast(player, castAngle);
         
-        int wallHeight = scale(castResult.distance, 0, 1, Config::windowHeight, Config::windowHeight / 2);
+        int wallHeight = scale(castResult.distance, 0, 10, Config::windowHeight, Config::windowHeight / 2);
         if (wallHeight > Config::windowHeight) {
             wallHeight = Config::windowHeight;
         }

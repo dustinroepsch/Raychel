@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include <cmath>
+#include <iostream>
 
 #include "config.h"
 #include "game.h"
@@ -16,6 +17,16 @@ int main()
     texture.create(Config::windowWidth, Config::windowHeight);
     sf::Sprite sprite(texture);
     sf::Uint8 *pixels = new sf::Uint8[Config::windowWidth * Config::windowHeight * 4];
+
+    sf::Text debugText;
+    sf::Font font;
+    if (!font.loadFromFile("resources/PT_Sans-Web-Regular.ttf")) {
+        std::cout << "Error loading debug font" << std::endl;
+    }
+    
+    debugText.setFillColor(sf::Color::Red);
+    debugText.setCharacterSize(70);
+    debugText.setFont(font);
 
     while (gameWindow.isOpen())
     {
@@ -33,15 +44,17 @@ int main()
                 }
                 if (Event.key.code == sf::Keyboard::Up) {
                     game.player.position.x += cos(game.player.angle) * .1;
-                    game.player.position.y += sin(game.player.angle) * .1;
+                    game.player.position.y -= sin(game.player.angle) * .1;
                 }
             }
         }
 
-        game.render(pixels);
+        debugText.setString(game.getDebugText());
 
+        game.render(pixels);
         texture.update(pixels);
         gameWindow.draw(sprite);
+        gameWindow.draw(debugText);
         gameWindow.display();
     }
 
