@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
+#include <cmath>
 
 #include "config.h"
 #include "game.h"
@@ -29,6 +30,10 @@ int main()
                 }
                 if (Event.key.code == sf::Keyboard::Right) {
                     game.player.angle += .1;
+                }
+                if (Event.key.code == sf::Keyboard::Up) {
+                    game.player.position.x += cos(game.player.angle) * .1;
+                    game.player.position.y += sin(game.player.angle) * .1;
                 }
             }
         }

@@ -5,7 +5,7 @@
 
 #include "config.h"
 
-Game::Game() : player(25, 30, 3.14 / 4)
+Game::Game() : player(2, 3, 0)
 {
     sf::Image levelImage;
     if (!levelImage.loadFromFile("resources/BasicLevel.png"))
@@ -17,6 +17,7 @@ Game::Game() : player(25, 30, 3.14 / 4)
 
 void Game::printCurrentLevelAsAscii()
 {
+    std::cout << "printing level" << std::endl;
     currentLevel->printAsAscii();
 }
 
@@ -43,7 +44,7 @@ void Game::render(sf::Uint8 *pixels)
     {
         CastResult castResult = currentLevel->rayCast(player, castAngle);
         
-        int wallHeight = scale(castResult.distance, 0, 1, 0, Config::windowHeight / 2);
+        int wallHeight = scale(castResult.distance, 0, 1, Config::windowHeight, Config::windowHeight / 2);
         if (wallHeight > Config::windowHeight) {
             wallHeight = Config::windowHeight;
         }

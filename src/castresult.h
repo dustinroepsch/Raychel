@@ -3,8 +3,8 @@
 
 class CastResult {
 public:
-    CastResult(int distance, bool horizontalHit) : distance(distance), horizontalHit(horizontalHit) {};
-    const int distance;
+    CastResult(float distance, bool horizontalHit) : distance(distance), horizontalHit(horizontalHit) {};
+    const float distance;
     const bool horizontalHit;
 };
 
