@@ -153,6 +153,6 @@ CastResult Level::rayCast(const Player &player, float angle) const
         }
     }
     //float dist = sqrt((currentPosition.x - player.position.x) * (currentPosition.x - player.position.x) + (currentPosition.y - player.position.y) * (currentPosition.y - player.position.y));
-     //eturn CastResult(dist, horizontalCollision);
+    //return CastResult(dist, horizontalCollision);
     return CastResult(getPerpDistance(currentPosition, player), horizontalCollision);
 }

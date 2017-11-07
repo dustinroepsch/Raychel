@@ -25,7 +25,7 @@ int main()
     }
     
     debugText.setFillColor(sf::Color::Red);
-    debugText.setCharacterSize(70);
+    debugText.setCharacterSize(42);
     debugText.setFont(font);
 
     while (gameWindow.isOpen())
@@ -41,6 +41,12 @@ int main()
                 }
                 if (Event.key.code == sf::Keyboard::Right) {
                     game.player.angle += .1;
+                }
+                if (game.player.angle < 0) {
+                    game.player.angle += 3.1415926 * 2;
+                }
+                if (game.player.angle > 3.1415926 * 2) {
+                    game.player.angle -= 3.1415926 * 2;
                 }
                 if (Event.key.code == sf::Keyboard::Up) {
                     game.player.position.x += cos(game.player.angle) * .1;
