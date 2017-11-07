@@ -50,7 +50,7 @@ int main()
                 }
                 if (Event.key.code == sf::Keyboard::Up) {
                     game.player.position.x += cos(game.player.angle) * .1;
-                    game.player.position.y -= sin(game.player.angle) * .1;
+                    game.player.position.y += sin(game.player.angle) * .1;
                 }
             }
         }

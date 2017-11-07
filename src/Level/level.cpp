@@ -58,7 +58,7 @@ bool Level::checkCollision(const sf::Vector2f &posToCheck, float castSlope, int 
     //add a small value to our position to get off of the grid lines
     //and ensure that we are rounding to the correct cell
     //truncate to floor towards zero
-    int col = (int)(posToCheck.x + .02 * xDirection);
+    int col = (int)(posToCheck.x + .001 * xDirection);
     int row = (int)getY(castSlope, col, posToCheck);
 
     if (col < 0 || col >= dimensions.x || row < 0 || row >= dimensions.y)
@@ -92,12 +92,22 @@ float getPerpDistance(const sf::Vector2f &pos, const Player &player)
 
     return fabs(projectionScaler);
 }
+float dist(const sf::Vector2f &a, const sf::Vector2f &b) {
+    sf::Vector2f distVec(a.x - b.x, a.y - b.y);
+    return sqrt(distVec.x * distVec.x + distVec.y * distVec.y);
+}
 
-CastResult Level::rayCast(const Player &player, float angle) const
+CastResult Level::rayCast(const Player &player, const float angle) const
 {
 
     const sf::Vector2f startingPosition = player.position;
-    const float castAngle = player.angle + angle;
+    float castAngle = player.angle + angle;
+    if (castAngle < 0) {
+        castAngle += 3.1415926 * 2;
+    }
+    if (castAngle > 3.1415926 * 2) {
+        castAngle -= 3.1415926 * 2;
+    }
     bool horizontalCollision = false;
 
     sf::Vector2f currentPosition = startingPosition;
@@ -121,7 +131,7 @@ CastResult Level::rayCast(const Player &player, float angle) const
     nextPositionAlongY.y = (int)(currentPosition.y + yDirection);
     nextPositionAlongY.x = getX(castSlope, nextPositionAlongY.y, startingPosition);
 
-    if (fabs(nextPositionAlongX.x - startingPosition.x) < fabs(nextPositionAlongY.y - startingPosition.y))
+    if (dist(nextPositionAlongX, startingPosition) < dist(nextPositionAlongY, startingPosition))
     {
         currentPosition = nextPositionAlongX;
         horizontalCollision = false;
@@ -132,6 +142,8 @@ CastResult Level::rayCast(const Player &player, float angle) const
         horizontalCollision = true;
     }
 
+   
+
     while (!checkCollision(currentPosition, castAngle, xDirection))
     {
         //truncate x to floor towards zero
@@ -141,7 +153,7 @@ CastResult Level::rayCast(const Player &player, float angle) const
         nextPositionAlongY.y = (int)(currentPosition.y + yDirection);
         nextPositionAlongY.x = getX(castSlope, nextPositionAlongY.y, startingPosition);
 
-        if (fabs(nextPositionAlongX.x - startingPosition.x) < fabs(nextPositionAlongY.y - startingPosition.y))
+        if (dist(nextPositionAlongX, startingPosition) < dist(nextPositionAlongY, startingPosition) )
         {
             currentPosition = nextPositionAlongX;
             horizontalCollision = false;
@@ -152,7 +164,7 @@ CastResult Level::rayCast(const Player &player, float angle) const
             horizontalCollision = true;
         }
     }
-    //float dist = sqrt((currentPosition.x - player.position.x) * (currentPosition.x - player.position.x) + (currentPosition.y - player.position.y) * (currentPosition.y - player.position.y));
-    //return CastResult(dist, horizontalCollision);
-    return CastResult(getPerpDistance(currentPosition, player), horizontalCollision);
+    
+    return CastResult(dist(currentPosition, startingPosition), horizontalCollision);
+    //return CastResult(getPerpDistance(currentPosition, player), horizontalCollision);
 }
