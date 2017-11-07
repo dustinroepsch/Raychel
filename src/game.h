@@ -3,20 +3,25 @@
 
 #include <vector>
 #include <memory>
+#include <SFML/Graphics.hpp>
 
 #include "Level/level.h"
 #include "player.h"
 #include "Level/Tiles/simpletilemap.h"
 
-class Game {
-public:
+class Game
+{
+  public:
     Game();
 
     void printCurrentLevelAsAscii();
-private:
+    void render(sf::Uint8 *pixels);
+    Player player;
+    
+
+  private:
     std::shared_ptr<Level> currentLevel;
     const SimpleTileMap simpleTileMap;
-    //Player player;
 };
 
 #endif

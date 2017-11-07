@@ -4,7 +4,8 @@
 #include "config.h"
 #include "game.h"
 
-int main() {
+int main()
+{
     Game game;
 
     game.printCurrentLevelAsAscii();
@@ -13,24 +14,32 @@ int main() {
     sf::Texture texture;
     texture.create(Config::windowWidth, Config::windowHeight);
     sf::Sprite sprite(texture);
-    sf::Uint8* pixels = new sf::Uint8[Config::windowWidth * Config::windowHeight * 4];
+    sf::Uint8 *pixels = new sf::Uint8[Config::windowWidth * Config::windowHeight * 4];
 
-    while (gameWindow.isOpen()) {
+    while (gameWindow.isOpen())
+    {
         sf::Event Event;
-        while (gameWindow.pollEvent(Event)) {
-          if (Event.type == sf::Event::Closed)
-        gameWindow.close();
+        while (gameWindow.pollEvent(Event))
+        {
+            if (Event.type == sf::Event::Closed)
+                gameWindow.close();
+            else if (Event.type == sf::Event::KeyPressed) {
+                if (Event.key.code == sf::Keyboard::Left) {
+                    game.player.angle -= .1;
+                }
+                if (Event.key.code == sf::Keyboard::Right) {
+                    game.player.angle += .1;
+                }
+            }
         }
-        
-        for (int i = 0; i < Config::windowHeight * Config::windowWidth * 4; i++) {
-            pixels[i] = rand();
-        }
+
+        game.render(pixels);
 
         texture.update(pixels);
         gameWindow.draw(sprite);
         gameWindow.display();
-      }
+    }
 
-      delete[] pixels;
+    delete[] pixels;
     return 0;
 }
