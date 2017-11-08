@@ -18,7 +18,7 @@ public:
     ~Level();
 
     void printAsAscii();
-    CastResult rayCast(const Player &player, float angle) const;
+    CastResult rayCast(const Player &player, float castAngle) const;
     
 private:
     float getX(float slope, float y, const sf::Vector2f &point) const;    

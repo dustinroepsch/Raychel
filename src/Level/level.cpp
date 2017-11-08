@@ -56,12 +56,13 @@ bool Level::checkCollision(const sf::Vector2f &posToCheck, float castAngle, int 
 {
 
     //truncate to floor towards zero
-    int col = posToCheck.x + cos(castAngle) * .0001;
-    int row = posToCheck.y + sin(castAngle) * .0001;;
+    int col = posToCheck.x ;//+ cos(castAngle) * .0001;
+    int row = posToCheck.y ;//+ sin(castAngle) * .0001;;
 
     if (col < 0 || col >= dimensions.x || row < 0 || row >= dimensions.y)
     {
         //always collide out of bounds;
+        std::cout << "This shouldn't happen" << std::endl;
         return true;
     }
 
@@ -85,11 +86,11 @@ float dist(const sf::Vector2f &a, const sf::Vector2f &b)
     return sqrt(distVec.x * distVec.x + distVec.y * distVec.y);
 }
 
-CastResult Level::rayCast(const Player &player, const float angle) const
+CastResult Level::rayCast(const Player &player, float castAngle) const
 {
 
     const sf::Vector2f startingPosition = player.position;
-    float castAngle = player.angle + angle;
+
     if (castAngle < 0)
     {
         castAngle += 3.1415926 * 2;
